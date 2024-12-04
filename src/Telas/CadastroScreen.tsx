@@ -1,30 +1,23 @@
 import React from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
-const CadastroScreen: React.FC = () => {
+const CadastroScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: 'https://via.placeholder.com/150x50?text=Voll' }} style={styles.logo} />
+      <Text style={styles.logo}>Voll</Text>
       <Text style={styles.title}>Insira alguns dados básicos:</Text>
-
       <Text style={styles.label}>Nome</Text>
       <TextInput style={styles.input} placeholder="Digite seu nome completo" />
-
       <Text style={styles.label}>Email</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Insira seu endereço de email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
+      <TextInput style={styles.input} placeholder="Insira seu endereço de email" />
       <Text style={styles.label}>Crie uma senha</Text>
-      <TextInput style={styles.input} placeholder="Insira sua senha" secureTextEntry={true} />
-
+      <TextInput style={styles.input} placeholder="Insira sua senha" secureTextEntry />
       <Text style={styles.label}>Repita a senha</Text>
-      <TextInput style={styles.input} placeholder="Insira sua senha" secureTextEntry={true} />
-
-      <TouchableOpacity style={styles.button}>
+      <TextInput style={styles.input} placeholder="Insira sua senha" secureTextEntry />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("CadastroDetails")}
+      >
         <Text style={styles.buttonText}>Avançar</Text>
       </TouchableOpacity>
     </View>
@@ -34,26 +27,25 @@ const CadastroScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    alignItems: "center",
     padding: 20,
+    backgroundColor: "#fff",
   },
   logo: {
-    width: 150,
-    height: 50,
-    marginBottom: 40,
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#002C6E",
+    marginBottom: 20,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "500",
-    marginBottom: 20,
+    fontSize: 18,
     color: "#444",
+    marginBottom: 20,
   },
   label: {
-    width: "100%",
+    alignSelf: "flex-start",
     fontSize: 14,
-    fontWeight: "500",
     color: "#444",
     marginBottom: 5,
   },
@@ -68,12 +60,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
   },
   button: {
-    backgroundColor: "#002C6E",
     width: "100%",
+    backgroundColor: "#002C6E",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginVertical: 10,
   },
   buttonText: {
     color: "#fff",
