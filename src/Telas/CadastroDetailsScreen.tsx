@@ -24,7 +24,7 @@ const CadastroDetailsScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         <TouchableOpacity style={styles.buttonSecondary} onPress={() => navigation.goBack()}>
           <Text style={styles.buttonText}>Voltar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonPrimary} onPress={() => {}}>
+        <TouchableOpacity style={styles.buttonPrimary} onPress={() => navigation.navigate("HealthPlan")}>
           <Text style={styles.buttonText}>Avançar</Text>
         </TouchableOpacity>
       </View>
