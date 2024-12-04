@@ -1,6 +1,31 @@
-import React from 'react';
-import LoginScreen from './src/Telas/login'; 
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "./src/Telas/Login";
+import CadastroScreen from "./src/Telas/CadastroScreen";
+
+export type RootStackParamList = {
+  Login: undefined;
+  Cadastro: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
-  return <LoginScreen />;  
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Cadastro"
+          component={CadastroScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
