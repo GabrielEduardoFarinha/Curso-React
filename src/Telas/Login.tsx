@@ -1,14 +1,58 @@
-import React from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "/App";
+import { RootStackParamList } from "../../App";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Adicionando um email e senha de teste
+  useEffect(() => {
+    const setTestCredentials = async () => {
+      const testUser = {
+        email: "123",
+        senha: "123",
+      };
+      await AsyncStorage.setItem("@user_data", JSON.stringify(testUser));
+    };
+
+    setTestCredentials();
+  }, []);
+
+  const handleLogin = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem("@user_data");
+      const userData = storedData ? JSON.parse(storedData) : null;
+
+      if (userData?.email === email && userData?.senha === password) {
+        Alert.alert("Sucesso", "Login realizado com sucesso!");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Erro", "Email ou senha inválidos.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Erro ao acessar os dados.");
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Image source={{ uri: 'https://via.placeholder.com/150x50?text=Voll' }} style={styles.logo} />
+      <Image
+        source={{ uri: "https://via.placeholder.com/150x50?text=Voll" }}
+        style={styles.logo}
+      />
       <Text style={styles.title}>Faça login em sua conta</Text>
 
       <Text style={styles.label}>Email</Text>
@@ -17,6 +61,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         placeholder="Insira seu endereço de email"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
 
       <Text style={styles.label}>Senha</Text>
@@ -24,9 +70,11 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         style={styles.input}
         placeholder="Insira sua senha"
         secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
@@ -36,7 +84,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
       <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
         <Text style={styles.signup}>
-          Ainda não tem conta? <Text style={styles.signupLink}>Faça seu cadastro!</Text>
+          Ainda não tem conta?{" "}
+          <Text style={styles.signupLink}>Faça seu cadastro!</Text>
         </Text>
       </TouchableOpacity>
     </View>
